@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>صفحة الأدلة</title>
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Cairo:wght@500;700;900&family=Share+Tech+Mono&display=swap');
+
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+}
+
+body{
+    min-height:100vh;
+    background:
+        radial-gradient(circle at 50% 0%, #300000 0%, transparent 45%),
+        linear-gradient(135deg,#030303,#0b0000 55%,#020202);
+    color:#fff;
+    font-family:'Cairo',sans-serif;
+    overflow-x:hidden;
+}
+
+/* خلفية */
+body::before{
+    content:"";
+    position:fixed;
+    inset:0;
+    pointer-events:none;
+    opacity:.15;
+    background-image:
+        linear-gradient(rgba(255,0,0,.12) 1px,transparent 1px),
+        linear-gradient(90deg,rgba(255,0,0,.12) 1px,transparent 1px);
+    background-size:40px 40px;
+}
+
+/* الهيدر */
+header{
+    min-height:260px;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    text-align:center;
+    border-bottom:1px solid #550000;
+    background:
+        linear-gradient(rgba(0,0,0,.45),rgba(0,0,0,.9)),
+        radial-gradient(circle,#3b0000,#050505 70%);
+}
+
+.logo{
+    font-family:'Share Tech Mono',monospace;
+    color:#ff1b1b;
+    font-size:18px;
+    letter-spacing:6px;
+    margin-bottom:20px;
+}
+
+h1{
+    font-size:clamp(42px,8vw,90px);
+    font-weight:900;
+    color:#fff;
+    text-shadow:
+        0 0 10px #ff0000,
+        0 0 35px rgba(255,0,0,.5);
+}
+
+.subtitle{
+    margin-top:15px;
+    color:#aaa;
+    font-size:17px;
+}
+
+/* قسم الأسماء */
+.names-section{
+    max-width:1200px;
+    margin:70px auto;
+    padding:0 25px;
+}
+
+.names-title{
+    text-align:center;
+    color:#ff2020;
+    font-size:28px;
+    margin-bottom:35px;
+}
+
+/* بطاقات ثابتة */
+.names-grid{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:20px;
+}
+
+.name-card{
+    min-height:130px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    text-align:center;
+
+    background:linear-gradient(145deg,#120000,#050505);
+    border:1px solid #650000;
+    box-shadow:
+        inset 0 0 25px rgba(255,0,0,.06),
+        0 8px 30px rgba(0,0,0,.5);
+
+    padding:25px;
+    border-radius:8px;
+
+    /* ثابتة */
+    transform:none !important;
+    transition:none !important;
+}
+
+.name-card:hover{
+    transform:none !important;
+}
+
+.name-card span{
+    font-size:23px;
+    font-weight:900;
+    color:#f2f2f2;
+}
+
+/* صفحة الروابط */
+.links-page{
+    max-width:1100px;
+    margin:90px auto;
+    padding:55px 25px;
+    border-top:1px solid #650000;
+    border-bottom:1px solid #650000;
+}
+
+.links-title{
+    text-align:center;
+    font-size:clamp(38px,7vw,70px);
+    font-weight:900;
+    color:#ff1616;
+    text-shadow:0 0 25px rgba(255,0,0,.5);
+    margin-bottom:15px;
+}
+
+.links-subtitle{
+    text-align:center;
+    color:#888;
+    margin-bottom:50px;
+}
+
+.links-list{
+    display:flex;
+    flex-direction:column;
+    gap:15px;
+}
+
+.link-row{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:20px;
+
+    padding:20px 25px;
+    background:#090909;
+    border-right:4px solid #b00000;
+    border-left:1px solid #250000;
+    border-top:1px solid #250000;
+    border-bottom:1px solid #250000;
+
+    box-shadow:0 0 20px rgba(255,0,0,.05);
+}
+
+.link-number{
+    min-width:45px;
+    height:45px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    background:#210000;
+    color:#ff2525;
+    font-family:'Share Tech Mono',monospace;
+    font-size:18px;
+}
+
+.link-url{
+    flex:1;
+    overflow:hidden;
+    text-overflow:ellipsis;
+    white-space:nowrap;
+
+    direction:ltr;
+    text-align:left;
+    color:#aaa;
+    font-family:'Share Tech Mono',monospace;
+    font-size:14px;
+}
+
+.open-link{
+    flex-shrink:0;
+    padding:11px 20px;
+    color:#fff;
+    background:#7d0000;
+    border:1px solid #d00000;
+    text-decoration:none;
+    font-weight:700;
+}
+
+.open-link:hover{
+    background:#b00000;
+}
+
+/* الفوتر */
+footer{
+    text-align:center;
+    padding:50px 20px;
+    color:#555;
+    font-family:'Share Tech Mono',monospace;
+}
+
+/* الهاتف */
+@media(max-width:800px){
+
+    .names-grid{
+        grid-template-columns:1fr;
+    }
+
+    .name-card{
+        min-height:105px;
+    }
+
+    .name-card span{
+        font-size:20px;
+    }
+
+    .link-row{
+        align-items:stretch;
+        flex-direction:column;
+    }
+
+    .link-number{
+        width:100%;
+    }
+
+    .link-url{
+        width:100%;
+        font-size:11px;
+    }
+
+    .open-link{
+        text-align:center;
+        width:100%;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+    <div class="logo">ARCHIVE // SYSTEM</div>
+
+    <h1> فضايح دلهمو  محافظه المنوفيه كشف الحقيقيه بدون خوف </h1>
+
+    <div class="subtitle">
+        أرشيف الملفات والروابط  وفضح كل تلك الاسماء مصطفي محمود وشكري صفوت وعمر يحيي وعبد العظيم سعيد وناريمان بشير وايات سعد
+    </div>
+</header>
+
+
+<section class="names-section">
+
+    <div class="names-title">
+        الملفات والفضايح
+    </div>
+
+    <div class="names-grid">
+
+        <div class="name-card">
+            <span>مصطفى محمود عوض</span>
+        </div>
+
+        <div class="name-card">
+            <span>شكري صفوت عوض</span>
+        </div>
+
+        <div class="name-card">
+            <span>عمر يحيى عبد الرحمن أبو المجد</span>
+        </div>
+
+        <div class="name-card">
+            <span>عبد العظيم سعيد الجوهري</span>
+        </div>
+
+        <div class="name-card">
+            <span>آيات سعد</span>
+        </div>
+
+        <div class="name-card">
+            <span>ناريمان بشير محي الدين</span>
+        </div>
+
+    </div>
+
+</section>
+
+
+<section class="links-page">
+
+    <h2 class="links-title">صفحة الأدلة والروابط هذه هي صفحه فضح كل تلك الاسماء  </h2>
+
+    <p class="links-subtitle">
+        جميع الروابط
+    </p>
+
+    <div class="links-list">
+
+        <div class="link-row">
+            <div class="link-number">01</div>
+            <div class="link-url">
+                https://drive.google.com/file/d/1lbPxF6fy3xr9i3opKYcbzTM-nM9vtBpt/view?usp=drivesdk
+            </div>
+            <a class="open-link"
+               href="https://drive.google.com/file/d/1lbPxF6fy3xr9i3opKYcbzTM-nM9vtBpt/view?usp=drivesdk"
+               target="_blank"
+               rel="noopener noreferrer">
+               فتح الرابط
+            </a>
+        </div>
+
+        <div class="link-row">
+            <div class="link-number">02</div>
+            <div class="link-url">
+                https://drive.google.com/file/d/1r8wHrjqcnANl9IC7aZK6RFGMR11OwWGq/view?usp=drivesdk
+            </div>
+            <a class="open-link"
+               href="https://drive.google.com/file/d/1r8wHrjqcnANl9IC7aZK6RFGMR11OwWGq/view?usp=drivesdk"
+               target="_blank"
+               rel="noopener noreferrer">
+               فتح الرابط
+            </a>
+        </div>
+
+        <div class="link-row">
+            <div class="link-number">03</div>
+            <div class="link-url">
+                https://drive.google.com/file/d/1Navllsd5TrsOMPvlgogZKH83i7bmJlJG/view?usp=drivesdk
+            </div>
+            <a class="open-link"
+               href="https://drive.google.com/file/d/1Navllsd5TrsOMPvlgogZKH83i7bmJlJG/view?usp=drivesdk"
+               target="_blank"
+               rel="noopener noreferrer">
+               فتح الرابط
+            </a>
+        </div>
+
+        <div class="link-row">
+            <div class="link-number">04</div>
+            <div class="link-url">
+                https://drive.google.com/file/d/1gD6Z7m5Q8l4U6zwfyJtXwKy_KaBlspSa/view?usp=drivesdk
+            </div>
+            <a class="open-link"
+               href="https://drive.google.com/file/d/1gD6Z7m5Q8l4U6zwfyJtXwKy_KaBlspSa/view?usp=drivesdk"
+               target="_blank"
+               rel="noopener noreferrer">
+               فتح الرابط
+            </a>
+        </div>
+
+        <div class="link-row">
+            <div class="link-number">05</div>
+            <div class="link-url">
+                https://drive.google.com/file/d/1bnlFkVPYtcvMz5IAATBWxip-suASXOUG/view?usp=drivesdk
+            </div>
+            <a class="open-link"
+               href="https://drive.google.com/file/d/1bnlFkVPYtcvMz5IAATBWxip-suASXOUG/view?usp=drivesdk"
+               target="_blank"
+               rel="noopener noreferrer">
+               فتح الرابط
+            </a>
+        </div>
+
+        <div class="link-row">
+            <div class="link-number">06</div>
+            <div class="link-url">
+                https://drive.google.com/file/d/1eKtHa3E550_uiZdVTVtJL4LgCK6KmcWi/view?usp=drivesdk
+            </div>
+            <a class="open-link"
+               href="https://drive.google.com/file/d/1eKtHa3E550_uiZdVTVtJL4LgCK6KmcWi/view?usp=drivesdk"
+               target="_blank"
+               rel="noopener noreferrer">
+               فتح الرابط
+            </a>
+        </div>
+
+        <div class="link-row">
+            <div class="link-number">07</div>
+            <div class="link-url">
+                https://drive.google.com/file/d/1eTF1KiRH_KfQY94kzkHPSxDuvtXUyu6J/view?usp=drivesdk
+            </div>
+            <a class="open-link"
+               href="https://drive.google.com/file/d/1eTF1KiRH_KfQY94kzkHPSxDuvtXUyu6J/view?usp=drivesdk"
+               target="_blank"
+               rel="noopener noreferrer">
+               فتح الرابط
+            </a>
+        </div>
+
+        <div class="link-row">
+            <div class="link-number">08</div>
+            <div class="link-url">
+                https://drive.google.com/file/d/1cO-Z4P6Gz-dMQLABYo53M2OUwpTsG5KH/view?usp=drivesdk
+            </div>
+            <a class="open-link"
+               href="https://drive.google.com/file/d/1cO-Z4P6Gz-dMQLABYo53M2OUwpTsG5KH/view?usp=drivesdk"
+               target="_blank"
+               rel="noopener noreferrer">
+               فتح الرابط
+            </a>
+        </div>
+
+        <div class="link-row">
+            <div class="link-number">09</div>
+            <div class="link-url">
+                https://drive.google.com/file/d/1ggXZPuq1d5-ZByXQ_tE9lcHRiAjc2Xby/view?usp=drivesdk
+            </div>
+            <a class="open-link"
+               href="https://drive.google.com/file/d/1ggXZPuq1d5-ZByXQ_tE9lcHRiAjc2Xby/view?usp=drivesdk"
+               target="_blank"
+               rel="noopener noreferrer">
+               فتح الرابط
+            </a>
+        </div>
+
+        <div class="link-row">
+            <div class="link-number">10</div>
+            <div class="link-url">
+                https://drive.google.com/file/d/1t3Nvbo_rMMbC79UqXenpeD-X4o3uVApo/view?usp=drivesdk
+            </div>
+            <a class="open-link"
+               href="https://drive.google.com/file/d/1t3Nvbo_rMMbC79UqXenpeD-X4o3uVApo/view?usp=drivesdk"
+               target="_blank"
+               rel="noopener noreferrer">
+               فتح الرابط
+            </a>
+        </div>
+
+        <div class="link-row">
+            <div class="link-number">11</div>
+            <div class="link-url">
+                https://drive.google.com/file/d/1ggXZPuq1d5-ZByXQ_tE9lcHRiAjc2Xby/view?usp=drivesdk
+            </div>
+            <a class="open-link"
+               href="https://drive.google.com/file/d/1ggXZPuq1d5-ZByXQ_tE9lcHRiAjc2Xby/view?usp=drivesdk"
+               target="_blank"
+               rel="noopener noreferrer">
+               فتح الرابط
+            </a>
+        </div>
+
+    </div>
+
+</section>
+
+
+<footer>
+    ARCHIVE SYSTEM
+</footer>
+
+</body>
+</html>
